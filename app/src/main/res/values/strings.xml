@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MD herbalens</string>
+    <string name="beranda">Beranda</string>
+    <string name="resep">Resep</string>
+    <string name="lens">Lens</string>
+    <string name="disimpan">Disimpan</string>
+    <string name="jelajahi">Jelajahi</string>
 </resources>
