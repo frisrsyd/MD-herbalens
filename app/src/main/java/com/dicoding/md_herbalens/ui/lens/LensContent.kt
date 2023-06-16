@@ -151,6 +151,7 @@ fun LensContent(
             .padding(16.dp, 0.dp, 16.dp, 64.dp),
             onCLickGallery = {
                 launcher.launch("image/*")
+                shouldShowCameraGlobal = false
             },
             onCLickSearch = {
                 navController.navigate(Screen.Detail.createRoute(plantId + 1))
