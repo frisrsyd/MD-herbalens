@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.dicoding.md_herbalens.R
@@ -57,7 +58,8 @@ fun LoginContent(
                     input = password,
                     onValueChange = viewModel::setPasswordValue,
                     textInput = "Password",
-                    placeholder = "Masukkan Password"
+                    placeholder = "Masukkan Password",
+                    isPassword = true
                 )
             }
             item {
@@ -68,6 +70,20 @@ fun LoginContent(
                     onClick = { navController.navigate(Screen.Home.route) },
                     content = {
                         Text(text = "Masuk", modifier = Modifier)
+                    }
+                )
+            }
+            item {
+                Text(text = "atau", modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), textAlign = TextAlign.Center)
+            }
+            item {
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    onClick = { navController.navigate(Screen.Register.route) },
+                    content = {
+                        Text(text = "Daftar", modifier = Modifier)
                     }
                 )
             }

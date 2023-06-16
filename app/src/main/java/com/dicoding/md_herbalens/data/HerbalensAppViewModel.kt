@@ -33,6 +33,12 @@ class HerbalensAppViewModel(private val repository: HerbalensRepository) : ViewM
     private val _passwordValue = mutableStateOf("")
     val passwordValue: State<String> get() = _passwordValue
 
+    private val _confirmPassword = mutableStateOf("")
+    val confirmPassword: State<String> get() = _confirmPassword
+
+    private val _nameValue = mutableStateOf("")
+    val nameValue: State<String> get() = _nameValue
+
     fun search(newQuery: String) {
         _query.value = newQuery
         val filteredList = _plants.value?.filter { plant ->
@@ -47,6 +53,14 @@ class HerbalensAppViewModel(private val repository: HerbalensRepository) : ViewM
 
     fun setPasswordValue(password: String) {
         _passwordValue.value = password
+    }
+
+    fun setConfirmPassword(confirmPassword: String) {
+        _confirmPassword.value = confirmPassword
+    }
+
+    fun setNameValue(name: String) {
+        _nameValue.value = name
     }
 
     fun getAllPlants() {

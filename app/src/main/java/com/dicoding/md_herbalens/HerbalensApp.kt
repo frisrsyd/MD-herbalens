@@ -9,7 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,7 +29,6 @@ import com.dicoding.md_herbalens.ui.lens.LensScreen
 import com.dicoding.md_herbalens.ui.login.LoginScreen
 import com.dicoding.md_herbalens.ui.navigation.Screen
 import com.dicoding.md_herbalens.ui.register.RegisterScreen
-import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -59,15 +59,25 @@ fun HerbalensApp(
             val onActionIconClick: () -> Unit = {
                 navController.navigate(Screen.Account.route)
             }
-            if (currentRoute == Screen.Lens.route || currentRoute == Screen.Detail.route) {
-                NavigationBar(
+            when (currentRoute) {
+                Screen.Lens.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = if (currentRoute == Screen.Lens.route) "HerbaScan" else "Detail",
+                    title = "HerbaScan",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
-            }
-            when (currentRoute) {
+
+                Screen.Detail.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = ImageVector.vectorResource(id = R.drawable.baseline_bookmark_border_24),
+                    title = "Detail",
+                    onNavigationIconClick = { onNavigationIconClick() },
+                    onActionIconClick = {
+
+                    }
+
+                )
+
                 Screen.Home.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
@@ -88,18 +98,21 @@ fun HerbalensApp(
                     title = "Semua Tanaman",
                     onActionIconClick = { onActionIconClick() }
                 )
+
                 Screen.Account.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
                     title = "Akun",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
+
                 Screen.Register.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
                     title = "Daftar",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
+
                 Screen.Login.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
@@ -131,7 +144,11 @@ fun HerbalensApp(
             }
             composable(Screen.Bookmarks.route) {
                 BookmarksScreen(
-
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    }
                 )
             }
             composable(Screen.AllPlant.route) {
@@ -159,17 +176,12 @@ fun HerbalensApp(
             }
             composable(Screen.Register.route) {
                 RegisterScreen(
-
+                    navController = navController,
                 )
             }
             composable(Screen.Login.route) {
                 LoginScreen(
                     navController = navController,
-                )
-            }
-            composable(Screen.Register.route) {
-                RegisterScreen(
-
                 )
             }
             composable(Screen.Account.route) {

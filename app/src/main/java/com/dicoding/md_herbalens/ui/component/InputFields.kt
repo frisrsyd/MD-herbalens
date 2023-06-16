@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -27,7 +29,8 @@ fun InputFields(
     input: String,
     onValueChange: (String) -> Unit,
     textInput: String,
-    placeholder: String
+    placeholder: String,
+    isPassword: Boolean = false,
 ) {
     Column(
         modifier = modifier
@@ -51,6 +54,8 @@ fun InputFields(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             },
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None, // Use PasswordVisualTransformation if isPassword is true
+            singleLine = true,
             modifier = modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
