@@ -1,16 +1,19 @@
 package com.dicoding.md_herbalens.ui.account
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
@@ -34,7 +37,8 @@ fun AccountContent(
         ) {
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.herbalens_logo),
-                contentDescription = "Logo Herbalens"
+                contentDescription = "Logo Herbalens",
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
             )
         }
         Button(

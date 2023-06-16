@@ -13,7 +13,7 @@ object TensorFlowHelper {
     const val imageSize = 256
 
     @Composable
-    fun classifyImage(image: Bitmap, callback : (@Composable (plant : Int) -> Unit)) {
+    fun classifyImage(image: Bitmap, callback : (plant : Int) -> Unit) {
         val model: Model = Model.newInstance(LocalContext.current)
 
         // Creates inputs for reference.

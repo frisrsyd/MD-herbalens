@@ -118,11 +118,7 @@ fun HerbalensApp(
             composable(Screen.Lens.route) {
                 LensScreen(
                     requestPermission = requestPermission,
-                    navigateToDetail = { plantId ->
-                        navController.navigate(
-                            Screen.Detail.createRoute(plantId)
-                        )
-                    }
+                    navController = navController,
                 )
             }
             composable(Screen.Bookmarks.route) {
