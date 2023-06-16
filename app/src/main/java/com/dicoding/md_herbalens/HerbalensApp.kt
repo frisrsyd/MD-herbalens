@@ -1,33 +1,33 @@
 package com.dicoding.md_herbalens
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.dicoding.md_herbalens.ui.account.AccountScreen
 import com.dicoding.md_herbalens.ui.bookmarks.BookmarksScreen
 import com.dicoding.md_herbalens.ui.component.BottomNavBar
-import com.dicoding.md_herbalens.ui.explore.AllPlantScreen
+import com.dicoding.md_herbalens.ui.component.NavigationBar
+import com.dicoding.md_herbalens.ui.details.DetailScreen
+import com.dicoding.md_herbalens.ui.explore.AllPlantsScreen
 import com.dicoding.md_herbalens.ui.home.HomeScreen
 import com.dicoding.md_herbalens.ui.lens.LensScreen
+import com.dicoding.md_herbalens.ui.login.LoginScreen
 import com.dicoding.md_herbalens.ui.navigation.Screen
-import com.dicoding.md_herbalens.ui.receipe.ReceipeScreen
+import com.dicoding.md_herbalens.ui.register.RegisterScreen
 import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,6 +35,7 @@ import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
 fun HerbalensApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    requestPermission: () -> Unit,
 ) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -42,8 +43,64 @@ fun HerbalensApp(
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.Detail.route) {
+            if (currentRoute != Screen.Detail.route && currentRoute != Screen.Lens.route) {
                 BottomNavBar(navController = navController)
+            }
+        },
+        topBar = {
+            val onNavigationIconClick: () -> Unit = {
+                navController.popBackStack()
+            }
+            val onActionIconClick: () -> Unit = {
+                navController.navigate(Screen.Account.route)
+            }
+            if (currentRoute == Screen.Lens.route || currentRoute == Screen.Detail.route) {
+                NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = if (currentRoute == Screen.Lens.route) "Lens" else "Detail",
+                    onNavigationIconClick = { onNavigationIconClick() }
+                )
+            }
+            when (currentRoute) {
+                Screen.Home.route -> NavigationBar(
+                    leftActionIcon = null,
+                    rightActionIcon = Icons.Default.AccountCircle,
+                    title = "Home",
+                    onActionIconClick = { onActionIconClick() }
+                )
+
+                Screen.Bookmarks.route -> NavigationBar(
+                    leftActionIcon = null,
+                    rightActionIcon = Icons.Default.AccountCircle,
+                    title = "Bookmarks",
+                    onActionIconClick = { onActionIconClick() }
+                )
+
+                Screen.AllPlant.route -> NavigationBar(
+                    leftActionIcon = null,
+                    rightActionIcon = Icons.Default.AccountCircle,
+                    title = "All Plants",
+                    onActionIconClick = { onActionIconClick() }
+                )
+                Screen.Account.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = "Account",
+                    onNavigationIconClick = { onNavigationIconClick() }
+                )
+                Screen.Register.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = "Register",
+                    onNavigationIconClick = { onNavigationIconClick() }
+                )
+                Screen.Login.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = "Login",
+                    onNavigationIconClick = { onNavigationIconClick() }
+                )
             }
         },
         modifier = modifier
@@ -58,14 +115,14 @@ fun HerbalensApp(
 
                 )
             }
-            composable(Screen.Recipe.route) {
-                ReceipeScreen(
-
-                )
-            }
             composable(Screen.Lens.route) {
                 LensScreen(
-
+                    requestPermission = requestPermission,
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    }
                 )
             }
             composable(Screen.Bookmarks.route) {
@@ -74,28 +131,49 @@ fun HerbalensApp(
                 )
             }
             composable(Screen.AllPlant.route) {
-                AllPlantScreen(
+                AllPlantsScreen(
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    }
+                )
+            }
+            composable(
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("id") {
+                    type = NavType.IntType
+                })
+            ) {
+                val receivedPlantId = it.arguments!!.getInt("id")
+                DetailScreen(
+                    plantId = receivedPlantId,
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+            composable(Screen.Register.route) {
+                RegisterScreen(
 
                 )
             }
+            composable(Screen.Login.route) {
+                LoginScreen(
+
+                )
+            }
+            composable(Screen.Register.route) {
+                RegisterScreen(
+
+                )
+            }
+            composable(Screen.Account.route) {
+                AccountScreen(
+                    navController = navController,
+                )
+            }
         }
-    }
-}
-
-@Composable
-fun FabCompose() {
-    FloatingActionButton(
-        interactionSource = remember { MutableInteractionSource() },
-        shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
-        contentColor = Color.Black,
-        //elevation = FloatingActionButtonDefaults.elevation(),
-        onClick = {
-
-        }) {
-        Icon(
-            ImageVector.vectorResource(id = R.drawable.baseline_camera_24),
-            contentDescription = "Camera"
-        )
     }
 }
 
@@ -103,6 +181,8 @@ fun FabCompose() {
 @Composable
 fun HerbalensAppPreview() {
     MDherbalensTheme {
-        HerbalensApp()
+        HerbalensApp(
+            requestPermission = { }
+        )
     }
 }
