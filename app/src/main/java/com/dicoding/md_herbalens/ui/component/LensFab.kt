@@ -3,9 +3,9 @@ package com.dicoding.md_herbalens.ui.component
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -17,40 +17,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.dicoding.md_herbalens.R
 
 @Composable
 fun LensFab(
     modifier: Modifier = Modifier,
     onCLickGallery: () -> Unit,
-    onCLickSearch: () -> Unit
+    onCLickSearch: () -> Unit,
+    onClickCamera: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
         FloatingActionButton(
             onClick = { onCLickSearch() },
             modifier = modifier
-                .size(96.dp)
-                .align(Alignment.BottomCenter),
+                .align(Alignment.CenterEnd),
             shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 28)),
             interactionSource = remember { MutableInteractionSource() },
         ) {
             Icon(
-                imageVector = Icons.Default.Search,
+                imageVector = Icons.Default.Check,
                 contentDescription = "Cari Herbal",
-                modifier = Modifier.size(36.dp)
             )
         }
         FloatingActionButton(
             onClick = { onCLickGallery() },
             modifier = modifier
                 .align(Alignment.CenterStart),
-            shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 12)),
+            shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 28)),
             interactionSource = remember { MutableInteractionSource() },
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.baseline_image_24),
                 contentDescription = "Pilih Gambar",
+            )
+        }
+        FloatingActionButton(
+            onClick = { onClickCamera() },
+            modifier = modifier
+                .align(Alignment.Center),
+            shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 28)),
+            interactionSource = remember { MutableInteractionSource() },
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.baseline_camera_alt_24),
+                contentDescription = "Foto",
             )
         }
     }
@@ -62,6 +72,7 @@ fun LensFabPreview() {
     LensFab(
         modifier = Modifier,
         onCLickGallery = {},
-        onCLickSearch = {}
+        onCLickSearch = {},
+        onClickCamera = {},
     )
 }

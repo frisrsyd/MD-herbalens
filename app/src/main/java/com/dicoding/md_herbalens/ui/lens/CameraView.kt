@@ -14,7 +14,7 @@ import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-private fun takePhoto(
+fun takePhoto(
     filenameFormat: String,
     imageCapture: ImageCapture,
     outputDirectory: File,
@@ -43,7 +43,7 @@ private fun takePhoto(
     })
 }
 
-private suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutine { continuation ->
+suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutine { continuation ->
     ProcessCameraProvider.getInstance(this).also { cameraProvider ->
         cameraProvider.addListener({
             continuation.resume(cameraProvider.get())

@@ -30,6 +30,7 @@ fun DetailScreen(
             image = it.image,
             benefits = it.benefit,
             recipes = it.recipes,
+            taxonomy = it.taxonomy,
             onBackClick = navigateBack
         )
     }
