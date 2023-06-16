@@ -8,9 +8,11 @@ import androidx.compose.ui.Modifier
 fun LensScreen(
     modifier: Modifier = Modifier,
     requestPermission: () -> Unit,
+    navigateToDetail: (Int) -> Unit,
 ) {
     requestPermission()
     LensContent(
         modifier = modifier,
+        navigateToDetail = navigateToDetail
     )
 }

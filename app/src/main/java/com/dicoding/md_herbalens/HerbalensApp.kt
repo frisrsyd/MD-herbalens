@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.dicoding.md_herbalens.ui.account.AccountScreen
 import com.dicoding.md_herbalens.ui.bookmarks.BookmarksScreen
 import com.dicoding.md_herbalens.ui.component.BottomNavBar
 import com.dicoding.md_herbalens.ui.component.NavigationBar
@@ -24,8 +25,9 @@ import com.dicoding.md_herbalens.ui.details.DetailScreen
 import com.dicoding.md_herbalens.ui.explore.AllPlantsScreen
 import com.dicoding.md_herbalens.ui.home.HomeScreen
 import com.dicoding.md_herbalens.ui.lens.LensScreen
+import com.dicoding.md_herbalens.ui.login.LoginScreen
 import com.dicoding.md_herbalens.ui.navigation.Screen
-import com.dicoding.md_herbalens.ui.receipe.ReceipeScreen
+import com.dicoding.md_herbalens.ui.register.RegisterScreen
 import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,34 +51,55 @@ fun HerbalensApp(
             val onNavigationIconClick: () -> Unit = {
                 navController.popBackStack()
             }
+            val onActionIconClick: () -> Unit = {
+                navController.navigate(Screen.Account.route)
+            }
             if (currentRoute == Screen.Lens.route || currentRoute == Screen.Detail.route) {
                 NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
-                    rightActionIcon = Icons.Default.AccountCircle,
+                    rightActionIcon = null,
                     title = if (currentRoute == Screen.Lens.route) "Lens" else "Detail",
-                    onNavigationIconClick = { onNavigationIconClick()}
+                    onNavigationIconClick = { onNavigationIconClick() }
                 )
             }
-            when(currentRoute) {
+            when (currentRoute) {
                 Screen.Home.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
                     title = "Home",
+                    onActionIconClick = { onActionIconClick() }
                 )
-                Screen.Recipe.route -> NavigationBar(
-                    leftActionIcon = null,
-                    rightActionIcon = Icons.Default.AccountCircle,
-                    title = "Recipe",
-                )
+
                 Screen.Bookmarks.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
                     title = "Bookmarks",
+                    onActionIconClick = { onActionIconClick() }
                 )
+
                 Screen.AllPlant.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
                     title = "All Plants",
+                    onActionIconClick = { onActionIconClick() }
+                )
+                Screen.Account.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = "Account",
+                    onNavigationIconClick = { onNavigationIconClick() }
+                )
+                Screen.Register.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = "Register",
+                    onNavigationIconClick = { onNavigationIconClick() }
+                )
+                Screen.Login.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = null,
+                    title = "Login",
+                    onNavigationIconClick = { onNavigationIconClick() }
                 )
             }
         },
@@ -92,14 +115,14 @@ fun HerbalensApp(
 
                 )
             }
-            composable(Screen.Recipe.route) {
-                ReceipeScreen(
-
-                )
-            }
             composable(Screen.Lens.route) {
                 LensScreen(
-                    requestPermission = requestPermission
+                    requestPermission = requestPermission,
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    }
                 )
             }
             composable(Screen.Bookmarks.route) {
@@ -128,6 +151,26 @@ fun HerbalensApp(
                     navigateBack = {
                         navController.navigateUp()
                     }
+                )
+            }
+            composable(Screen.Register.route) {
+                RegisterScreen(
+
+                )
+            }
+            composable(Screen.Login.route) {
+                LoginScreen(
+
+                )
+            }
+            composable(Screen.Register.route) {
+                RegisterScreen(
+
+                )
+            }
+            composable(Screen.Account.route) {
+                AccountScreen(
+                    navController = navController,
                 )
             }
         }

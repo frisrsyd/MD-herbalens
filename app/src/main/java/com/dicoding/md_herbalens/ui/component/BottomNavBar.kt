@@ -37,11 +37,6 @@ fun BottomNavBar(
                 title = stringResource(R.string.beranda)
             ),
             NavigationItem(
-                icon = ImageVector.vectorResource(id = R.drawable.baseline_receipt_long_24),
-                screen = Screen.Recipe,
-                title = stringResource(R.string.resep)
-            ),
-            NavigationItem(
                 icon = ImageVector.vectorResource(id = R.drawable.baseline_camera_24),
                 screen = Screen.Lens,
                 title = stringResource(R.string.lens)

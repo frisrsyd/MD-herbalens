@@ -13,7 +13,7 @@ object TensorFlowHelper {
     const val imageSize = 256
 
     @Composable
-    fun classifyImage(image: Bitmap, callback : (@Composable (plant : String) -> Unit)) {
+    fun classifyImage(image: Bitmap, callback : (@Composable (plant : Int) -> Unit)) {
         val model: Model = Model.newInstance(LocalContext.current)
 
         // Creates inputs for reference.
@@ -58,7 +58,7 @@ object TensorFlowHelper {
             "Nangka", "Pacar Air", "Pandan", "Patikan Kebo", "Pir", "Plum", "Rosela",
             "Rosemary", "Serai", "Sirih", "Sirsak", "Srikaya", "Suji", "Zaitun"
         )
-        callback.invoke(maxConfidence.toString() + " " + plants[maxPos] + " " + maxPos.toString())
+        callback.invoke(maxPos)
 
 
         // Releases model resources if no longer used.
