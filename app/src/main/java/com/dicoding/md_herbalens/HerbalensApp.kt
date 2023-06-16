@@ -9,7 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,7 +29,6 @@ import com.dicoding.md_herbalens.ui.lens.LensScreen
 import com.dicoding.md_herbalens.ui.login.LoginScreen
 import com.dicoding.md_herbalens.ui.navigation.Screen
 import com.dicoding.md_herbalens.ui.register.RegisterScreen
-import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -59,51 +59,64 @@ fun HerbalensApp(
             val onActionIconClick: () -> Unit = {
                 navController.navigate(Screen.Account.route)
             }
-            if (currentRoute == Screen.Lens.route || currentRoute == Screen.Detail.route) {
-                NavigationBar(
+            when (currentRoute) {
+                Screen.Lens.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = if (currentRoute == Screen.Lens.route) "Lens" else "Detail",
+                    title = "HerbaScan",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
-            }
-            when (currentRoute) {
+
+                Screen.Detail.route -> NavigationBar(
+                    leftActionIcon = Icons.Default.ArrowBack,
+                    rightActionIcon = ImageVector.vectorResource(id = R.drawable.baseline_bookmark_border_24),
+                    title = "Detail",
+                    onNavigationIconClick = { onNavigationIconClick() },
+                    onActionIconClick = {
+
+                    }
+
+                )
+
                 Screen.Home.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
-                    title = "Home",
+                    title = "Herbalens",
                     onActionIconClick = { onActionIconClick() }
                 )
 
                 Screen.Bookmarks.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
-                    title = "Bookmarks",
+                    title = "Disimpan",
                     onActionIconClick = { onActionIconClick() }
                 )
 
                 Screen.AllPlant.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
-                    title = "All Plants",
+                    title = "Semua Tanaman",
                     onActionIconClick = { onActionIconClick() }
                 )
+
                 Screen.Account.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = "Account",
+                    title = "Akun",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
+
                 Screen.Register.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = "Register",
+                    title = "Daftar",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
+
                 Screen.Login.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = "Login",
+                    title = "Masuk",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
             }
@@ -117,7 +130,11 @@ fun HerbalensApp(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
-
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    },
                 )
             }
             composable(Screen.Lens.route) {
@@ -131,7 +148,11 @@ fun HerbalensApp(
             }
             composable(Screen.Bookmarks.route) {
                 BookmarksScreen(
-
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    }
                 )
             }
             composable(Screen.AllPlant.route) {
@@ -159,17 +180,12 @@ fun HerbalensApp(
             }
             composable(Screen.Register.route) {
                 RegisterScreen(
-
+                    navController = navController,
                 )
             }
             composable(Screen.Login.route) {
                 LoginScreen(
-
-                )
-            }
-            composable(Screen.Register.route) {
-                RegisterScreen(
-
+                    navController = navController,
                 )
             }
             composable(Screen.Account.route) {

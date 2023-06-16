@@ -1,32 +1,47 @@
-package com.dicoding.md_herbalens.ui.home
+package com.dicoding.md_herbalens.ui.bookmarks
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.dicoding.md_herbalens.data.HerbalensAppViewModel
 import com.dicoding.md_herbalens.model.PlantResponse
 import com.dicoding.md_herbalens.ui.component.PlantListItem
+import com.dicoding.md_herbalens.ui.component.SearchBar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeContent(
+fun BookmarksContent(
     plants: PlantResponse?,
     modifier: Modifier = Modifier,
-    navigateToDetail: (Int) -> Unit,
+    viewModel: HerbalensAppViewModel,
+    navigateToDetail: (Int) -> Unit
 ) {
     Box(modifier = modifier) {
+        val query by viewModel.query
         val listState = rememberLazyListState()
         LazyColumn(
             state = listState,
-            contentPadding = PaddingValues(bottom = 32.dp, start = 16.dp, end = 16.dp),
+            contentPadding = PaddingValues(bottom = 32.dp),
         ) {
+            item {
+                SearchBar(
+                    query = query,
+                    onQueryChange = viewModel::search,
+                    modifier = Modifier.background(MaterialTheme.colorScheme.tertiary)
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(12.dp))
+            }
             item {
                 if (plants != null) {
                     PlantListItem(

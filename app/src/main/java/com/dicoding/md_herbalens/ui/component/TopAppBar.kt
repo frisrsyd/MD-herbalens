@@ -1,5 +1,6 @@
 package com.dicoding.md_herbalens.ui.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +28,7 @@ fun NavigationBar(
 ) {
     TopAppBar(
         title = {
-            Text(text = title)
+            Text(text = title, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         },
         navigationIcon = {
             if (leftActionIcon != null) {
