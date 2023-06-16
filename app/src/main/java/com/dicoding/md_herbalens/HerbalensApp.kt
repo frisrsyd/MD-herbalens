@@ -63,7 +63,7 @@ fun HerbalensApp(
                 NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = if (currentRoute == Screen.Lens.route) "Lens" else "Detail",
+                    title = if (currentRoute == Screen.Lens.route) "HerbaScan" else "Detail",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
             }
@@ -71,39 +71,39 @@ fun HerbalensApp(
                 Screen.Home.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
-                    title = "Home",
+                    title = "Herbalens",
                     onActionIconClick = { onActionIconClick() }
                 )
 
                 Screen.Bookmarks.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
-                    title = "Bookmarks",
+                    title = "Disimpan",
                     onActionIconClick = { onActionIconClick() }
                 )
 
                 Screen.AllPlant.route -> NavigationBar(
                     leftActionIcon = null,
                     rightActionIcon = Icons.Default.AccountCircle,
-                    title = "All Plants",
+                    title = "Semua Tanaman",
                     onActionIconClick = { onActionIconClick() }
                 )
                 Screen.Account.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = "Account",
+                    title = "Akun",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
                 Screen.Register.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = "Register",
+                    title = "Daftar",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
                 Screen.Login.route -> NavigationBar(
                     leftActionIcon = Icons.Default.ArrowBack,
                     rightActionIcon = null,
-                    title = "Login",
+                    title = "Masuk",
                     onNavigationIconClick = { onNavigationIconClick() }
                 )
             }
@@ -164,7 +164,7 @@ fun HerbalensApp(
             }
             composable(Screen.Login.route) {
                 LoginScreen(
-
+                    navController = navController,
                 )
             }
             composable(Screen.Register.route) {

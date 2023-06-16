@@ -27,12 +27,26 @@ class HerbalensAppViewModel(private val repository: HerbalensRepository) : ViewM
     private val _query = mutableStateOf("")
     val query: State<String> get() = _query
 
+    private val _emailValue = mutableStateOf("")
+    val emailValue: State<String> get() = _emailValue
+
+    private val _passwordValue = mutableStateOf("")
+    val passwordValue: State<String> get() = _passwordValue
+
     fun search(newQuery: String) {
         _query.value = newQuery
         val filteredList = _plants.value?.filter { plant ->
             plant.plantName.contains(newQuery, ignoreCase = true)
         }
         _plants.value = filteredList
+    }
+
+    fun setEmailValue(email: String) {
+        _emailValue.value = email
+    }
+
+    fun setPasswordValue(password: String) {
+        _passwordValue.value = password
     }
 
     fun getAllPlants() {
