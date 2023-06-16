@@ -130,7 +130,11 @@ fun HerbalensApp(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
-
+                    navigateToDetail = { plantId ->
+                        navController.navigate(
+                            Screen.Detail.createRoute(plantId)
+                        )
+                    },
                 )
             }
             composable(Screen.Lens.route) {
