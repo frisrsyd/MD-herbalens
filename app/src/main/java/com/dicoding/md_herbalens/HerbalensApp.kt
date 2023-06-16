@@ -29,6 +29,8 @@ import com.dicoding.md_herbalens.ui.login.LoginScreen
 import com.dicoding.md_herbalens.ui.navigation.Screen
 import com.dicoding.md_herbalens.ui.register.RegisterScreen
 import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
+import java.io.File
+import java.util.concurrent.ExecutorService
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,6 +38,9 @@ fun HerbalensApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     requestPermission: () -> Unit,
+    shouldShowCamera: Boolean,
+    outputDirectory: File,
+    cameraExecutor: ExecutorService
 ) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -118,11 +123,10 @@ fun HerbalensApp(
             composable(Screen.Lens.route) {
                 LensScreen(
                     requestPermission = requestPermission,
-                    navigateToDetail = { plantId ->
-                        navController.navigate(
-                            Screen.Detail.createRoute(plantId)
-                        )
-                    }
+                    navController = navController,
+                    shouldShowCamera = shouldShowCamera,
+                    outputDirectory = outputDirectory,
+                    cameraExecutor = cameraExecutor
                 )
             }
             composable(Screen.Bookmarks.route) {
@@ -174,15 +178,5 @@ fun HerbalensApp(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HerbalensAppPreview() {
-    MDherbalensTheme {
-        HerbalensApp(
-            requestPermission = { }
-        )
     }
 }

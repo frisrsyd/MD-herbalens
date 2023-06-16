@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.dicoding.md_herbalens.R
+import com.dicoding.md_herbalens.model.Taxonomy
 
 @Composable
 fun DetailContent(
@@ -37,6 +39,7 @@ fun DetailContent(
     description: String,
     benefits: List<String>,
     recipes: List<String>,
+    taxonomy: Taxonomy,
     onBackClick: () -> Unit
 ) {
     Column(
@@ -68,6 +71,84 @@ fun DetailContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(168.dp)
+            )
+            Spacer(modifier = modifier.padding(top = 28.dp))
+            //taxonomy
+            Text(
+                text = "Taksonomi",
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+            Text(
+                text = "Kingdom: ${taxonomy.kingdom}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+
+            Text(
+                text = "Division: ${taxonomy.division}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+
+            Text(
+                text = "Class: ${taxonomy.classis}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+
+            Text(
+                text = "Order: ${taxonomy.ordo}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+
+            Text(
+                text = "Family: ${taxonomy.family}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+
+            Text(
+                text = "Genus: ${taxonomy.genus}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
+            )
+            Spacer(modifier = modifier.padding(top = 8.dp))
+
+            Text(
+                text = "Species: ${taxonomy.species}",
+                fontWeight = FontWeight.Medium,
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Justify
             )
             Spacer(modifier = modifier.padding(top = 28.dp))
             Text(
@@ -154,6 +235,15 @@ fun DetailContentPreview() {
     DetailContent(
         title = "Daun Sirsak",
         image = "https://storage.googleapis.com/datasetherbalens/shown_images/alang-alang.jpg",
+        taxonomy = Taxonomy(
+            kingdom = "Plantae",
+            division = "Tracheophyta",
+            classis = "Liliopsida",
+            ordo = "Poales",
+            family = "Poaceae",
+            genus = "Imperata",
+            species = "Imperata cylindrica"
+        ),
         description = "Daun sirsak adalah daun dari pohon sirsak yang biasa tumbuh di daerah tropis. Daun sirsak memiliki banyak manfaat untuk kesehatan, salah satunya adalah untuk mengobati kanker. Daun sirsak mengandung senyawa acetogenins yang dapat membunuh sel kanker. Selain itu, daun sirsak juga mengandung senyawa lain yang dapat menghambat pertumbuhan sel kanker. Daun sirsak juga mengandung senyawa antioksidan yang dapat melawan radikal bebas dan mencegah kerusakan sel. Daun sirsak juga mengandung senyawa antiinflamasi yang dapat mengurangi peradangan. Daun sirsak juga mengandung senyawa antidiabetes yang dapat mengurangi kadar gula darah. Daun sirsak juga mengandung senyawa antikolesterol yang dapat mengurangi kadar kolesterol. Daun sirsak juga mengandung senyawa antijamur yang dapat mengobati infeksi jamur. Daun sirsak juga mengandung senyawa antiparasit yang dapat mengobati infeksi parasit. Daun sirsak juga mengandung senyawa antiradang yang dapat mengurangi peradangan.",
         benefits = listOf(
             "Mengobati kanker",

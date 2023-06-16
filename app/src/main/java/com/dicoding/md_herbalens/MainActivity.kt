@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.dicoding.md_herbalens.ui.theme.MDherbalensTheme
 import java.io.File
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class MainActivity : ComponentActivity() {
 
@@ -38,6 +39,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     HerbalensApp(
                         requestPermission = { requestCameraPermission() },
+                        shouldShowCamera = shouldShowCamera.value,
+                        outputDirectory = getOutputDirectory(),
+                        cameraExecutor = Executors.newSingleThreadExecutor()
                     )
                 }
             }
@@ -50,6 +54,7 @@ class MainActivity : ComponentActivity() {
     ) { isGranted ->
         if (isGranted) {
             Log.i("message", "Permission granted")
+            shouldShowCamera.value = true
         } else {
             Log.i("message", "Permission denied")
         }
@@ -59,9 +64,10 @@ class MainActivity : ComponentActivity() {
         when {
             ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
                 Log.i("message", "Permission previously granted")
+                shouldShowCamera.value = true
             }
 
             ActivityCompat.shouldShowRequestPermissionRationale(
@@ -71,5 +77,18 @@ class MainActivity : ComponentActivity() {
 
             else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
+    }
+
+    private fun getOutputDirectory(): File {
+        val mediaDir = externalMediaDirs.firstOrNull()?.let {
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
+
+        return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
     }
 }
